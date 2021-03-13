@@ -8,6 +8,7 @@ import (
 	"notes-app/internal/handler"
 	"notes-app/internal/repository"
 	"notes-app/internal/service"
+	"os"
 )
 
 // @title NotesApp API
@@ -45,7 +46,7 @@ func main() {
 	handlers := handler.NewHandler(services)
 
 	app := new(server.App)
-	if err := app.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
+	if err := app.Run(os.Getenv("PORT"), handlers.InitRoutes()); err != nil {
 		logrus.Fatalf("error occurned while running http app: %s", err.Error())
 	}
 }
