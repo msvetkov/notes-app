@@ -1,9 +1,9 @@
 port: "8000"
 
 db:
-  host: "localhost"
+  host: "ec2-52-7-115-250.compute-1.amazonaws.com"
   port: "5432"
-  username: "postgres"
-  password: "qwerty"
-  dbname: "postgres"
-  sslmode: "disable"
+  username: "bxycsshmngmrxy"
+  password: "6aaf92d903eb3d2aab746d11eeb537e8acb4e707a16cb35536d4790ac9158b4f"
+  dbname: "d6aba0lr0makb1"
+  sslmode: "require"
