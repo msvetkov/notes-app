@@ -12,6 +12,18 @@ type getNotesResponse struct {
 	Data []domain.Note `json:"data"`
 }
 
+// @Summary Get all notes
+// @Security ApiKeyAuth
+// @Tags notes
+// @Description get all notes
+// @ID get-all-notes
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} getNotesResponse
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /api/notes [get]
 func (h *Handler) getNotes(c *gin.Context) {
 	list, err := h.services.Note.GetAll(-1)
 
@@ -25,6 +37,18 @@ func (h *Handler) getNotes(c *gin.Context) {
 	})
 }
 
+// @Summary Get note by id
+// @Security ApiKeyAuth
+// @Tags notes
+// @Description get note by id
+// @ID get-all-notes
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} domain.Note
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /api/notes [get]
 func (h *Handler) getNote(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -40,6 +64,19 @@ func (h *Handler) getNote(c *gin.Context) {
 	c.JSON(http.StatusOK, note)
 }
 
+// @Summary Create note
+// @Security ApiKeyAuth
+// @Tags notes
+// @Description create note
+// @ID create-list
+// @Accept  json
+// @Produce  json
+// @Param input body domain.Note true "note info"
+// @Success 200 {integer} integer 1
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /api/notes [post]
 func (h *Handler) createNote(c *gin.Context) {
 	var input domain.Note
 	if err := c.BindJSON(&input); err != nil {
@@ -64,6 +101,18 @@ func (h *Handler) createNote(c *gin.Context) {
 	})
 }
 
+// @Summary Update note by id
+// @Security ApiKeyAuth
+// @Tags notes
+// @Description update note by id
+// @ID get-all-notes
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} integer 1
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /api/notes [put]
 func (h *Handler) updateNote(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -85,6 +134,18 @@ func (h *Handler) updateNote(c *gin.Context) {
 	c.JSON(http.StatusOK, statusResponse{"ok"})
 }
 
+// @Summary Delete note by id
+// @Security ApiKeyAuth
+// @Tags notes
+// @Description delete note by id
+// @ID get-all-notes
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} integer 1
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /api/notes [delete]
 func (h *Handler) deleteNote(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

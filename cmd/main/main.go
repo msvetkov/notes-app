@@ -11,6 +11,14 @@ import (
 	"os"
 )
 
+// @title NotesApp API
+// @version 1.0
+// @description API Server for NotesApp
+
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
+
 func main() {
 	logrus.SetFormatter(new(logrus.JSONFormatter))
 

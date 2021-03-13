@@ -2,7 +2,11 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/swaggo/files"       // swagger embed files
+	"github.com/swaggo/gin-swagger" // gin-swagger middleware
 	"notes-app/internal/service"
+
+	_ "notes-app/docs"
 )
 
 type Handler struct {
@@ -27,6 +31,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			notes.DELETE("/:id", h.deleteNote)
 		}
 	}
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	return router
 }
