@@ -2,8 +2,8 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/msvetkov/notes-app/pkg/domain"
 	"net/http"
-	"notes-app/internal/domain"
 	"strconv"
 	"time"
 )

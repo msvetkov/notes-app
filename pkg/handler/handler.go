@@ -2,11 +2,11 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/msvetkov/notes-app/pkg/service"
 	"github.com/swaggo/files"       // swagger embed files
 	"github.com/swaggo/gin-swagger" // gin-swagger middleware
-	"notes-app/internal/service"
 
-	_ "notes-app/docs"
+	_ "github.com/msvetkov/notes-app/docs"
 )
 
 type Handler struct {

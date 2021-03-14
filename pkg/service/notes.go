@@ -1,8 +1,8 @@
 package service
 
 import (
-	"notes-app/internal/domain"
-	"notes-app/internal/repository"
+	"github.com/msvetkov/notes-app/pkg/domain"
+	"github.com/msvetkov/notes-app/pkg/repository"
 )
 
 type NotesService struct {

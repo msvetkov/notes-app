@@ -3,7 +3,7 @@ package repository
 import (
 	"fmt"
 	"github.com/jmoiron/sqlx"
-	"notes-app/internal/domain"
+	"github.com/msvetkov/notes-app/pkg/domain"
 	"strings"
 )
 
