@@ -5,6 +5,12 @@ import (
 	"github.com/msvetkov/notes-app/pkg/domain"
 )
 
+type Authorization interface {
+	CreateUser(user domain.User) (int, error)
+	GetUser(username, password string) (domain.User, error)
+	DeleteUser(userId int) error
+}
+
 type Note interface {
 	Create(note domain.Note) (int, error)
 	GetAll(userId int) ([]domain.Note, error)
@@ -15,10 +21,12 @@ type Note interface {
 
 type Repository struct {
 	Note
+	Authorization
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
-		Note: NewNotesPostgres(db),
+		Note:          NewNotesPostgres(db),
+		Authorization: NewAuthPostgres(db),
 	}
 }

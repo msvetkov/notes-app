@@ -25,7 +25,13 @@ type getNotesResponse struct {
 // @Failure default {object} errorResponse
 // @Router /api/notes [get]
 func (h *Handler) getNotes(c *gin.Context) {
-	list, err := h.services.Note.GetAll(-1)
+	userId, err := getUserId(c)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	list, err := h.services.Note.GetAll(userId)
 
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
@@ -50,12 +56,18 @@ func (h *Handler) getNotes(c *gin.Context) {
 // @Failure default {object} errorResponse
 // @Router /api/notes [get]
 func (h *Handler) getNote(c *gin.Context) {
+	userId, err := getUserId(c)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
 	}
 
-	note, err := h.services.Note.GetById(-1, id)
+	note, err := h.services.Note.GetById(userId, id)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -78,6 +90,12 @@ func (h *Handler) getNote(c *gin.Context) {
 // @Failure default {object} errorResponse
 // @Router /api/notes [post]
 func (h *Handler) createNote(c *gin.Context) {
+	userId, err := getUserId(c)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
 	var input domain.Note
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
@@ -88,7 +106,7 @@ func (h *Handler) createNote(c *gin.Context) {
 		Title:       input.Title,
 		Body:        input.Body,
 		DateCreated: time.Now(),
-		UserId:      -1,
+		UserId:      userId,
 	})
 
 	if err != nil {
@@ -114,6 +132,12 @@ func (h *Handler) createNote(c *gin.Context) {
 // @Failure default {object} errorResponse
 // @Router /api/notes [put]
 func (h *Handler) updateNote(c *gin.Context) {
+	userId, err := getUserId(c)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
@@ -125,7 +149,7 @@ func (h *Handler) updateNote(c *gin.Context) {
 		return
 	}
 
-	err = h.services.Note.Update(-1, id, input)
+	err = h.services.Note.Update(userId, id, input)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -147,12 +171,18 @@ func (h *Handler) updateNote(c *gin.Context) {
 // @Failure default {object} errorResponse
 // @Router /api/notes [delete]
 func (h *Handler) deleteNote(c *gin.Context) {
+	userId, err := getUserId(c)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
 	}
 
-	err = h.services.Note.Delete(-1, id)
+	err = h.services.Note.Delete(userId, id)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
