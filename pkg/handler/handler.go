@@ -1,12 +1,13 @@
 package handler
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	_ "github.com/msvetkov/notes-app/docs"
 	"github.com/msvetkov/notes-app/pkg/service"
 	"github.com/swaggo/files"       // swagger embed files
 	"github.com/swaggo/gin-swagger" // gin-swagger middleware
-
-	_ "github.com/msvetkov/notes-app/docs"
+	"time"
 )
 
 type Handler struct {
@@ -39,6 +40,14 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		}
 	}
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	router.Use(cors.New(cors.Config{
+		AllowAllOrigins:  true,
+		AllowMethods:     []string{"GET", "PUT", "DELETE", "POST", "Content-Length"},
+		AllowHeaders:     []string{"Authorization", "Content-Type", "Origin"},
+		AllowCredentials: false,
+		MaxAge:           12 * time.Hour,
+	}))
 
 	return router
 }
