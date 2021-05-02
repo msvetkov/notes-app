@@ -72,31 +72,3 @@ func (h *Handler) signIn(c *gin.Context) {
 		"token": token,
 	})
 }
-
-// @Summary SignIn
-// @Tags auth
-// @Description login
-// @ID login
-// @Accept  json
-// @Produce  json
-// @Param input body signInInput true "credentials"
-// @Success 200 {string} string "token"
-// @Failure 400,404 {object} errorResponse
-// @Failure 500 {object} errorResponse
-// @Failure default {object} errorResponse
-// @Router /auth/sign-in [post]
-func (h *Handler) deleteUser(c *gin.Context) {
-	userId, err := getUserId(c)
-	if err != nil {
-		newErrorResponse(c, http.StatusInternalServerError, err.Error())
-		return
-	}
-
-	err = h.services.Authorization.DeleteUser(userId)
-	if err != nil {
-		newErrorResponse(c, http.StatusInternalServerError, err.Error())
-		return
-	}
-
-	c.JSON(http.StatusOK, statusResponse{"ok"})
-}

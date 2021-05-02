@@ -77,7 +77,3 @@ func generatePasswordHash(password string) string {
 
 	return fmt.Sprintf("%x", hash.Sum([]byte(salt)))
 }
-
-func (s *AuthService) DeleteUser(userId int) error {
-	return s.repo.DeleteUser(userId)
-}

@@ -9,7 +9,12 @@ type Authorization interface {
 	CreateUser(user domain.User) (int, error)
 	GenerateToken(login, password string) (string, error)
 	ParseToken(token string) (int, error)
-	DeleteUser(userId int) error
+}
+
+type User interface {
+	GetById(userId int) (domain.User, error)
+	Update(userId int, input domain.UpdateUserInput) error
+	Delete(userId int) error
 }
 
 type Note interface {
@@ -23,11 +28,13 @@ type Note interface {
 type Service struct {
 	Note
 	Authorization
+	User
 }
 
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
 		Note:          NewNotesService(repos.Note),
 		Authorization: NewAuthService(repos.Authorization),
+		User:          NewUserService(repos.User),
 	}
 }

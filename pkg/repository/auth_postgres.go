@@ -33,10 +33,3 @@ func (r *AuthPostgres) GetUser(login, password string) (domain.User, error) {
 
 	return user, err
 }
-
-func (r *AuthPostgres) DeleteUser(userId int) error {
-	deleteQuery := fmt.Sprintf("DELETE FROM %s WHERE id = $1", usersTable)
-	_, err := r.db.Exec(deleteQuery, userId)
-
-	return err
-}

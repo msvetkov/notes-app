@@ -25,7 +25,6 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	{
 		auth.POST("/sign-up", h.signUp)
 		auth.POST("/sign-in", h.signIn)
-		auth.DELETE("/delete-account", h.deleteUser)
 	}
 
 	api := router.Group("/api", h.userIdentity)
@@ -38,7 +37,15 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			notes.PUT("/:id", h.updateNote)
 			notes.DELETE("/:id", h.deleteNote)
 		}
+
+		user := api.Group("/user")
+		{
+			user.GET("/", h.getUser)
+			user.PUT("/", h.updateUser)
+			user.DELETE("/", h.deleteUser)
+		}
 	}
+
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	router.Use(cors.New(cors.Config{
