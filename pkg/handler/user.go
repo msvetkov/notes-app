@@ -6,6 +6,18 @@ import (
 	"net/http"
 )
 
+// @Summary Get current user info
+// @Security ApiKeyAuth
+// @Tags user
+// @Description get current user info
+// @ID get-current-user
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} domain.User
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /api/user [get]
 func (h *Handler) getUser(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
@@ -23,6 +35,18 @@ func (h *Handler) getUser(c *gin.Context) {
 	c.JSON(http.StatusOK, user)
 }
 
+// @Summary Update current user info
+// @Security ApiKeyAuth
+// @Tags user
+// @Description update current user info
+// @ID update-current-user
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} statusResponse
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /api/user [put]
 func (h *Handler) updateUser(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
@@ -45,6 +69,18 @@ func (h *Handler) updateUser(c *gin.Context) {
 	c.JSON(http.StatusOK, statusResponse{"ok"})
 }
 
+// @Summary Delete current user
+// @Security ApiKeyAuth
+// @Tags user
+// @Description delete current user
+// @ID delete-current-user
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} statusResponse
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /api/user [delete]
 func (h *Handler) deleteUser(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {

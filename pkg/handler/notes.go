@@ -47,7 +47,7 @@ func (h *Handler) getNotes(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Tags notes
 // @Description get note by id
-// @ID get-all-notes
+// @ID get-note-by-id
 // @Accept  json
 // @Produce  json
 // @Success 200 {object} domain.Note
@@ -80,7 +80,7 @@ func (h *Handler) getNote(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Tags notes
 // @Description create note
-// @ID create-list
+// @ID create-note
 // @Accept  json
 // @Produce  json
 // @Param input body domain.Note true "note info"
@@ -126,7 +126,7 @@ func (h *Handler) createNote(c *gin.Context) {
 // @ID get-all-notes
 // @Accept  json
 // @Produce  json
-// @Success 200 {object} integer 1
+// @Success 200 {object} statusResponse
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
@@ -162,10 +162,10 @@ func (h *Handler) updateNote(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Tags notes
 // @Description delete note by id
-// @ID get-all-notes
+// @ID delete-note-by-id
 // @Accept  json
 // @Produce  json
-// @Success 200 {object} integer 1
+// @Success 200 {object} statusResponse
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
