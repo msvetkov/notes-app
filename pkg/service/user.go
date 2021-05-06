@@ -25,5 +25,9 @@ func (s *UserService) Update(userId int, input domain.UpdateUserInput) error {
 	if err := input.Validate(); err != nil {
 		return err
 	}
+
+	if input.Password != nil {
+		*input.Password = generatePasswordHash(*input.Password)
+	}
 	return s.repo.Update(userId, input)
 }

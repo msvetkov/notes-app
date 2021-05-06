@@ -6,6 +6,11 @@ import (
 	"net/http"
 )
 
+type signUpResponse struct {
+	Id    int    `json:"id"`
+	Token string `json:"token"`
+}
+
 // @Summary SignUp
 // @Tags auth
 // @Description create account
@@ -13,7 +18,7 @@ import (
 // @Accept  json
 // @Produce  json
 // @Param input body domain.User true "account info"
-// @Success 200 {integer} integer 1
+// @Success 200 {object} signUpResponse
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
@@ -32,8 +37,15 @@ func (h *Handler) signUp(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, map[string]interface{}{
-		"id": id,
+	token, err := h.services.Authorization.GenerateToken(input.Login, input.Password)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, signUpResponse{
+		Id:    id,
+		Token: token,
 	})
 }
 
