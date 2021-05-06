@@ -48,6 +48,13 @@ definitions:
     - login
     - password
     type: object
+  handler.signUpResponse:
+    properties:
+      id:
+        type: integer
+      token:
+        type: string
+    type: object
   handler.statusResponse:
     properties:
       status:
@@ -357,7 +364,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: integer
+            $ref: '#/definitions/handler.signUpResponse'
         "400":
           description: Bad Request
           schema:
